@@ -1,3 +1,9 @@
+
+- #### Automated every 2-3 Hrs.
+> The [Markdown README](https://github.com/Azathothas/NixOS-Packages/blob/main/README.md) **may not render because of huge file size.**
+> - View [RAW](https://pub.ajam.dev/repos/Azathothas/NixOS-Packages/nixpkgs.txt): https://pub.ajam.dev/repos/Azathothas/NixOS-Packages/nixpkgs.txt
+> - View [Markdown](https://pub.ajam.dev/repos/Azathothas/NixOS-Packages/README.md.txt): https://pub.ajam.dev/repos/Azathothas/NixOS-Packages/README.md.txt
+---
 - #### List all Details about `pkg-xyz`
 ```bash
  nix-env --query --available --meta --json "pkg-xyz"
