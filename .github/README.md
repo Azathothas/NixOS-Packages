@@ -19,6 +19,13 @@ curl -qfsSL "https://pub.ajam.dev/repos/Azathothas/NixOS-Packages/nixpkgs.json" 
 !# Refs: https://functor.tokyo/blog/2021-10-20-nix-cross-static
 nix search "nixpkgs#pkgsStatic" "^" --extra-experimental-features nix-command --extra-experimental-features flakes --refresh --quiet
 
+#https://askubuntu.com/a/1471201 (https://www.freedesktop.org/software/systemd/man/latest/systemd.resource-control.html)
+systemd-run --scope -p CPUQuota="60%" -p MemoryMax="8192M" -p MemoryHigh="4096M" --user nix search "nixpkgs#pkgsStatic" "^" --extra-experimental-features nix-command --extra-experimental-features flakes --refresh --quiet
+
+
 #Check if only package `xyz` can be built
 nix search "nixpkgs#pkgsStatic" "xyz" --extra-experimental-features nix-command --extra-experimental-features flakes --refresh --quiet
 ```
+
+- #### legacyPackages
+> - https://www.reddit.com/r/programmingcirclejerk/comments/13vptkz/the_legacy_in_legacypackages_doesnt_imply_that/
