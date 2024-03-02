@@ -62,7 +62,8 @@ jobs:
         run: |
           #Presets
           set +x ; set +e
-          #--------------#        
+          #--------------#
+          source "$HOME/.nix-profile/etc/profile.d/nix.sh"
           #JSON
           nix search "nixpkgs#" "^" --extra-experimental-features nix-command --extra-experimental-features flakes --json --refresh --quiet | jq . > "$GITHUB_WORKSPACE/main/nixpkgs.json"
           #TXT
