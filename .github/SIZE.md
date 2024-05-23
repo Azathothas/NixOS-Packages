@@ -1,5 +1,5 @@
 ```mathematica
- 42M └─┬ main
+ 43M └─┬ main
  13M   ├── nixpkgs.json
 9.7M   ├── nixpkgs.txt
 9.7M   ├── README.md.txt
