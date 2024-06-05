@@ -20,17 +20,37 @@ jobs:
           path: "main"
           filter: "blob:none" #https://github.blog/2020-12-21-get-up-to-speed-with-partial-clone-and-shallow-clone/
 
-      - name: Install Coreutils
+      - name: Setup ENV
         run: |
-          # Presets
-          set -x ; set +e
-          #--------------#
+          #presets
+          set +x ; set +e
+          #-------------#
           sudo apt update -y
           sudo apt install bc coreutils curl dos2unix fdupes jq moreutils wget -y
           sudo apt-get install apt-transport-https apt-utils ca-certificates coreutils dos2unix gnupg2 jq moreutils p7zip-full rsync software-properties-common texinfo util-linux wget -y 2>/dev/null ; sudo apt-get update -y 2>/dev/null
           # Do again, sometimes fails
           sudo apt install bc coreutils curl dos2unix fdupes jq moreutils wget -y
           sudo apt-get install apt-transport-https apt-utils ca-certificates coreutils dos2unix gnupg2 jq moreutils p7zip-full rsync software-properties-common texinfo util-linux wget -y 2>/dev/null ; sudo apt-get update -y 2>/dev/null
+          #tmp
+          SYSTMP="$(dirname $(mktemp -u))" && export SYSTMP="$SYSTMP"
+          echo "SYSTMP=$SYSTMP" >> "$GITHUB_ENV"
+          ##Setup rClone
+          mkdir -p "$HOME/.config/rclone"
+          echo "${{ secrets.RCLONE_CF_R2_PUB }}" > "$HOME/.config/rclone/rclone.conf"
+          export RCLONE_STATS="120s" ; echo "RCLONE_STATS=$RCLONE_STATS" >> "$GITHUB_ENV"
+          ##User-Agent
+          USER_AGENT="$(curl -qfsSL 'https://pub.ajam.dev/repos/Azathothas/Wordlists/Misc/User-Agents/ua_chrome_macos_latest.txt')" && export USER_AGENT="$USER_AGENT"
+          echo "USER_AGENT=$USER_AGENT" >> "$GITHUB_ENV"
+        continue-on-error: true          
+
+      - name: Install Addons
+        run: |
+          #presets
+          set +x ; set +e
+          #-------------#
+          bash <(curl -qfsSL "https://pub.ajam.dev/repos/Azathothas/Arsenal/misc/Linux/install_bb_tools.sh")
+          #yj
+          sudo curl -qfsSL "https://bin.ajam.dev/$(uname -m)/yj" -o "/usr/local/bin/yj" && sudo chmod +x "/usr/local/bin/yj"
         continue-on-error: true
 
       - name: Set TZ to (Asia/Kathmandu)
@@ -45,7 +65,7 @@ jobs:
           sudo apt-get update -y
         continue-on-error: true
         
-      - name: Setup Env
+      - name: Setup Nix
         run: |
           #Presets
           set +x ; set +e
@@ -66,8 +86,10 @@ jobs:
           source "$HOME/.nix-profile/etc/profile.d/nix.sh"
           #JSON
           nix search "nixpkgs#" "^" --extra-experimental-features nix-command --extra-experimental-features flakes --json --refresh --quiet | jq . > "$GITHUB_WORKSPACE/main/nixpkgs.json"
+          #Convert to YAML
+          cat "$GITHUB_WORKSPACE/main/nixpkgs.json" | yj -jy | tee "$GITHUB_WORKSPACE/main/nixpkgs.yaml"
           #TXT
-          cat "$GITHUB_WORKSPACE/main/nixpkgs.json" | jq -r 'to_entries[] | "| \(.value.pname) | \(.value.version) | \(.value.description) | \(.key) |"' | sort -u -o "$GITHUB_WORKSPACE/main/nixpkgs.txt"
+          cat "$GITHUB_WORKSPACE/main/nixpkgs.json" | jq -r 'to_entries[] | "| \(.value.pname) | \(.value.version) | \(.value.description) | \(.key) |"' | sort -u -o "$SYSTMP/nixpkgs.txt"
         continue-on-error: false 
 
       - name: Update README.md
@@ -80,17 +102,32 @@ jobs:
           echo '---' >> "$GITHUB_WORKSPACE/main/README.md"
           echo "|Package | Version | Description | Attribute |" >> "$GITHUB_WORKSPACE/main/README.md"
           echo "|--------|---------|-------------|-----------|" >> "$GITHUB_WORKSPACE/main/README.md"
-          cat "$GITHUB_WORKSPACE/main/nixpkgs.txt" >> "$GITHUB_WORKSPACE/main/README.md"
+          cat "$SYSTMP/nixpkgs.txt" >> "$GITHUB_WORKSPACE/main/README.md"
           echo -e "" >> "$GITHUB_WORKSPACE/main/README.md"
           echo '---' >> "$GITHUB_WORKSPACE/main/README.md"
           cat "$GITHUB_WORKSPACE/main/README.md" > "$GITHUB_WORKSPACE/main/README.md.txt"
+          sed 's/[\*\|]//g' "$SYSTMP/nixpkgs.txt" > "$GITHUB_WORKSPACE/main/nixpkgs.txt"
+        continue-on-error: true
+
+      - name: Generate index.html --> ("https://nixos-packages.ajam.dev")
+        run: |
+          #Presets
+          set +x ; set +e
+          #--------------#
+          #https://github.com/oscarmorrison/md-page
+          cat "$GITHUB_WORKSPACE/main/.github/style.header" > "$GITHUB_WORKSPACE/main/index.html"
+          echo "" >> "$GITHUB_WORKSPACE/main/index.html"
+          #cat "$GITHUB_WORKSPACE/main/README.md" >> "$GITHUB_WORKSPACE/main/index.html"
+          sed -n "$(($(grep -n '|Package' "$GITHUB_WORKSPACE/main/README.md" | cut -d ':' -f 1) - 1)),\$p" "$GITHUB_WORKSPACE/main/README.md" >> "$GITHUB_WORKSPACE/main/index.html"
+          echo "" >> "$GITHUB_WORKSPACE/main/index.html"
+          cat "$GITHUB_WORKSPACE/main/.github/style.footer" >> "$GITHUB_WORKSPACE/main/index.html"
         continue-on-error: true
 
       - name: Get DateTime
         run: |
           #Presets
           set +x ; set +e
-          #--------------#        
+          #--------------#
           # Date Time
           NEPALI_TIME=$(TZ='Asia/Kathmandu' date +'%Y-%m-%d (%I:%M:%S %p)')
           echo "NEPALI_TIME=$NEPALI_TIME" >> $GITHUB_ENV

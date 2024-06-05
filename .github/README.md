@@ -1,8 +1,10 @@
 
 - #### Automated every 2-3 Hrs from [NixOS/nixpkgs](https://github.com/NixOS/nixpkgs)
-> The [Markdown README](https://github.com/Azathothas/NixOS-Packages/blob/main/README.md) **may not render because of huge file size.**
+> The [Markdown README](https://github.com/Azathothas/NixOS-Packages/blob/main/README.md) **may not render because of huge file size.** Please Visit: **https://nixos-packages.ajam.dev**
 > - View [RAW](https://pub.ajam.dev/repos/Azathothas/NixOS-Packages/nixpkgs.txt): https://pub.ajam.dev/repos/Azathothas/NixOS-Packages/nixpkgs.txt
-> - View [Markdown](https://pub.ajam.dev/repos/Azathothas/NixOS-Packages/README.md.txt): https://pub.ajam.dev/repos/Azathothas/NixOS-Packages/README.md.txt
+> - View [JSON](https://github.com/Azathothas/NixOS-Packages/blob/main/nixpkgs.json): https://github.com/Azathothas/NixOS-Packages/blob/main/nixpkgs.json
+> - View [YAML](https://github.com/Azathothas/NixOS-Packages/blob/main/nixpkgs.yaml): https://github.com/Azathothas/NixOS-Packages/blob/main/nixpkgs.yaml
+> - View [Markdown](https://nixos-packages.ajam.dev): https://nixos-packages.ajam.dev
 > #### Why?
 > - I wanted an `easy to parse`, `automatable` metadata for nix packages I could [`compile/cross-compile statically`](https://bin.ajam.dev/) for [Azathothas/Toolpacks](https://github.com/Azathothas/Toolpacks).
 > - If [search.nixos.org](https://github.com/NixOS/nixos-search) ever offers an **`easy-to-use`** API, this repo will be Archived.
