@@ -1,7 +1,10 @@
 ```mathematica
- 43M └─┬ main
+ 64M └─┬ main
  14M   ├── nixpkgs.json
-9.8M   ├── nixpkgs.txt
+ 11M   ├── nixpkgs.yaml
+9.8M   ├── index.html
 9.8M   ├── README.md.txt
-9.8M   └── README.md
+9.8M   ├── README.md
+9.4M   ├── nixpkgs.txt
+4.0K   └── CNAME
 ```
