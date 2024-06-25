@@ -6,5 +6,6 @@
 9.8M   ├── README.md.txt
 9.8M   ├── README.md
 9.4M   ├── nixpkgs.txt
+4.0K   ├── LICENSE
 4.0K   └── CNAME
 ```
