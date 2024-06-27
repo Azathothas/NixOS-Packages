@@ -1,9 +1,9 @@
- 64M └─┬ main
+ 65M └─┬ main
  14M   ├── nixpkgs.json
  11M   ├── nixpkgs.yaml
 9.8M   ├── index.html
 9.8M   ├── README.md.txt
 9.8M   ├── README.md
-9.4M   ├── nixpkgs.txt
+9.5M   ├── nixpkgs.txt
 4.0K   ├── LICENSE
 4.0K   └── CNAME
