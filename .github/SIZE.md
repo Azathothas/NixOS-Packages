@@ -5,7 +5,7 @@
  10M   ├── index.html
  10M   ├── README.md.txt
  10M   ├── README.md
-9.8M   ├── nixpkgs.txt
+9.9M   ├── nixpkgs.txt
 4.0K   ├── LICENSE
 4.0K   └── CNAME
 ```
