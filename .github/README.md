@@ -1,12 +1,12 @@
 
 - #### Automated every 2-3 Hrs from [NixOS/nixpkgs](https://github.com/NixOS/nixpkgs)
-> The [Markdown README](https://github.com/Azathothas/NixOS-Packages/blob/main/README.md) **may not render because of huge file size.** Please Visit: **https://nixos-packages.ajam.dev**
-> - View [RAW](https://pub.ajam.dev/repos/Azathothas/NixOS-Packages/nixpkgs.txt): https://pub.ajam.dev/repos/Azathothas/NixOS-Packages/nixpkgs.txt
-> - View [JSON](https://github.com/Azathothas/NixOS-Packages/blob/main/nixpkgs.json): https://github.com/Azathothas/NixOS-Packages/blob/main/nixpkgs.json
-> - View [YAML](https://github.com/Azathothas/NixOS-Packages/blob/main/nixpkgs.yaml): https://github.com/Azathothas/NixOS-Packages/blob/main/nixpkgs.yaml
+> The [Markdown README](https://github.com/pkgforge-dev/NixOS-Packages/blob/main/README.md) **may not render because of huge file size.** Please Visit: **https://nixos-packages.ajam.dev**
+> - View [RAW](https://pub.ajam.dev/repos/pkgforge-dev/NixOS-Packages/nixpkgs.txt): https://pub.ajam.dev/repos/pkgforge-dev/NixOS-Packages/nixpkgs.txt
+> - View [JSON](https://github.com/pkgforge-dev/NixOS-Packages/blob/main/nixpkgs.json): https://github.com/pkgforge-dev/NixOS-Packages/blob/main/nixpkgs.json
+> - View [YAML](https://github.com/pkgforge-dev/NixOS-Packages/blob/main/nixpkgs.yaml): https://github.com/pkgforge-dev/NixOS-Packages/blob/main/nixpkgs.yaml
 > - View [Markdown](https://nixos-packages.ajam.dev): https://nixos-packages.ajam.dev
 > #### Why?
-> - I wanted an `easy to parse`, `automatable` metadata for nix packages I could [`compile/cross-compile statically`](https://bin.ajam.dev/) for [Azathothas/Toolpacks](https://github.com/Azathothas/Toolpacks).
+> - I wanted an `easy to parse`, `automatable` metadata for nix packages I could [`compile/cross-compile statically`](https://github.com/pkgforge/soarpkgs) for [Soar](https://github.com/pkgforge/soar).
 > - If [search.nixos.org](https://github.com/NixOS/nixos-search) ever offers an **`easy-to-use`** API, this repo will be Archived.
 > > - https://github.com/NixOS/nixos-search/issues/296
 ---
@@ -15,9 +15,9 @@
  nix-env --query --available --meta --json "pkg-xyz"
 ```
 
-- #### List all Packages from [NixOS-Packages.json](https://pub.ajam.dev/repos/Azathothas/NixOS-Packages/nixpkgs.json)
+- #### List all Packages from [NixOS-Packages.json](https://raw.githubusercontent.com/pkgforge-dev/NixOS-Packages/refs/heads/main/nixpkgs.json)
 ```bash
-curl -qfsSL "https://pub.ajam.dev/repos/Azathothas/NixOS-Packages/nixpkgs.json" | jq -r '.[] | .pname' | sort -u
+curl -qfsSL "https://raw.githubusercontent.com/pkgforge-dev/NixOS-Packages/refs/heads/main/nixpkgs.json" | jq -r '.[] | .pname' | sort -u
 ```
 
 - #### List all Packages that can be _potentially_ `Statically Built`
